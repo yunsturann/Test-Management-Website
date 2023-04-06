@@ -1,0 +1,64 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap:1rem;
+    margin-top:100px;
+}
+
+.draggable-list{
+    width:420px;
+    background-color: silver;
+    list-style-type: none;
+    padding:1.5rem 0.5rem;
+    color:rgb(0, 0, 0);
+ 
+}
+.draggable-list li{
+    margin-top:4px;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    align-items:stretch;
+    padding-left:6px;
+}
+.draggable-list li p{
+    height: 100%;
+    width: 100%;
+    align-self: center;
+}
+.draggable-list li.dragging {
+    opacity: 0.7;
+}
+.draggable-list li i{
+    width:34px;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    align-self: center;
+    height: 100%;
+    padding:10px 0;
+}
+.draggable-list li i:hover{
+ 
+    color:green;
+    background-color: rgb(216, 213, 213);
+}
+
+form{
+    margin:50px;
+    text-align: center;
+}
+form input, form button{
+    padding:1rem;
+}
