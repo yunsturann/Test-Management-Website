@@ -1,23 +1,25 @@
 
-const todoContainer= document.getElementById("todo");
+const todoContainer = document.getElementById("todo");
 const inProcessContainer= document.getElementById("in-process");
 const doneContainer= document.getElementById("done");
 
 // add todo
-const btnSubmit = document.getElementById("submit-task");
-const inputText = document.getElementById("input");
+const btnSubmit = document.getElementById("assign-task");
+const inputText = document.getElementById("input-task");
 
 const doneTask = (e) =>{
     const parentContainer = e.target.parentElement.parentElement;
     if(parentContainer.id === "done"){
         alert("The task done completely");
+        e.target.parentElement.classList.add("bg-success");
         return;
     }
-    addTask(e.target.previousElementSibling.textContent,parentContainer.nextElementSibling);
+    addTask(e.target.previousElementSibling.textContent,parentContainer.parentElement.nextElementSibling.lastElementChild);
     e.target.parentElement.remove();
 }
 
 const addTask =  (text,parentContainer) => {
+    console.log(text,parentContainer);
     let item = document.createElement("li");
     item.classList.add("item");
     item.innerHTML= `<p>${text}</p><i class="uil uil-check"></i>`;
@@ -38,12 +40,12 @@ const addTask =  (text,parentContainer) => {
 
 const submitTodo = (e, parentContainer) =>{
     e.preventDefault();
+    if(inputText.value == "") return;
     addTask(inputText.value,parentContainer);
     inputText.value = "";
 }
 
 btnSubmit.addEventListener("click",(e)=>submitTodo(e,todoContainer));
-
 
 const initTodoContainer = (e,parentContainer) => {
     e.preventDefault();
@@ -69,5 +71,17 @@ inProcessContainer.addEventListener("dragenter", e => e.preventDefault());
 doneContainer.addEventListener("dragover", e => initTodoContainer(e,doneContainer));
 doneContainer.addEventListener("dragenter", e => e.preventDefault());
 
+//LightBox
+const btnAddTask = document.getElementById("btn-add-task"); 
+const lightbox = document.querySelector(".lightbox");
+const closeLightbox = document.querySelector(".uil-times");
+
+closeLightbox.addEventListener("click",()=>{
+    lightbox.classList.remove("show");
+})
+
+btnAddTask.addEventListener("click",()=>{
+    lightbox.classList.add("show");
+});
 
 
