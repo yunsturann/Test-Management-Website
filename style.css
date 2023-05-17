@@ -51,7 +51,7 @@
     background-color: white;
     display: flex;
     justify-content: space-between;
-    align-items:stretch;
+    align-items: center;
     padding-left:6px;
 }
 
@@ -71,10 +71,9 @@
     cursor: pointer;
     align-self: center;
     height: 100%;
-    padding:10px 0;
+    padding:8px 0;
 }
 .draggable-list li i:hover{
- 
     color:green;
     background-color: rgb(216, 213, 213);
 }

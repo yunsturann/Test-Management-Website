@@ -3,36 +3,47 @@ const todoContainer = document.getElementById("todo");
 const inProcessContainer = document.getElementById("in-process");
 const doneContainer = document.getElementById("done");
 window.addEventListener("load", (event) => {
-    console.log("aaa")
     user = JSON.parse(localStorage.getItem("user"));
     if (user.role == "Manager") {
         document.getElementById("btn-add-task").style.display = "block";
     }
-});// add todo
+});
+
+const DeleteTask = (e) =>{
+    if(confirm("Are you sure to delete to task ?")){
+        e.target.parentElement.remove();
+    }
+}
+
+// add todo
 const btnSubmit = document.getElementById("assign-task");
 const inputText = document.getElementById("input-task");
 
 const doneTask = (e) => {
+    console.log(e.target.parentElement);
     const parentContainer = e.target.parentElement.parentElement;
     if (parentContainer.id === "done") {
         alert("The task done completely");
         e.target.parentElement.classList.add("bg-success");
         return;
     }
-    addTask(e.target.previousElementSibling.textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
+    addTask(e.target.previousElementSibling.previousElementSibling.textContent,
+         parentContainer.parentElement.nextElementSibling.lastElementChild);
     e.target.parentElement.remove();
 }
 
 const addTask = (text, parentContainer) => {
-    console.log(text, parentContainer);
+    //console.log(text, parentContainer);
     let item = document.createElement("li");
     item.classList.add("item");
-    item.innerHTML = `<p>${text}</p><i class="uil uil-check"></i>`;
+    item.innerHTML = `<p>${text}</p><i class="uil uil-times"></i><i class="uil uil-check"></i>`;
     item.draggable = true;
     parentContainer.appendChild(item);
 
     // done click event
-    item.querySelector("i").addEventListener("click", doneTask)
+    item.querySelector(".uil-check").addEventListener("click", doneTask);
+    // delete button event
+    item.querySelector(".uil-times").addEventListener("click",DeleteTask);
 
     // add dragging events
     item.addEventListener("dragstart", () => {
