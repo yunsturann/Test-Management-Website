@@ -4,7 +4,7 @@
         "surname": "Turan",
         "username": "Leptonion",
         "password": "123456",
-        "role": "Admin"
+        "role": "Manager"
     },
     {
         "name": "Yunus",
@@ -25,7 +25,7 @@
         "surname": "Ozdemir",
         "username": "7ough",
         "password": "123456",
-        "role": "Admin"
+        "role": "Manager"
     },
     {
         "name": "Oguzhan",
@@ -46,7 +46,7 @@
         "surname": "Çetiner",
         "username": "Irenimo",
         "password": "123456",
-        "role": "Admin"
+        "role": "Manager"
     },
     {
         "name": "İrem",

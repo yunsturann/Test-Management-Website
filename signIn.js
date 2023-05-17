@@ -27,7 +27,7 @@ function signIn(e) {
                 person.surname = data.surname;
                 person.role = data.role;
                 localStorage.setItem('user', JSON.stringify(person));
-                window.location.href = "main.html";
+                window.location.href = "index.html";
             }
             else {
                 alert("Invalid password!!");
