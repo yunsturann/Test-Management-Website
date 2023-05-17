@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width , initial-scale=1.0">
+
+    <link rel="stylesheet" href="login.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <title>template</title>
+</head>
+
+<body>
+    <div class="container" id="signin">
+        <div class="title">
+            <h2>Sign Up</h2>
+
+        </div>
+        <form id="signUpForm" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="surName">Surname:</label>
+                <input type="text" id="surName" name="surName" required>
+            </div>
+            <div class="form-group">
+                <label for="username1">Username:</label>
+                <input type="text" id="username1" name="username1" required>
+            </div>
+            <div class="form-group">
+
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" required>
+            </div>
+            <div class="form-group">
+
+                <label for="passwordC">Confirm Password:</label>
+                <input type="password" id="passwordC" name="passwordC" required>
+            </div>
+            <div class="form-group">
+                <div style="display: flex;"> <input type="radio" id="manager" name="role" value="Manager" required>
+                    <label for="developer">Manager</label>
+                </div>
+                <div style="display: flex;"> <input type="radio" id="tester" name="role" value="Tester" required>
+                    <label for="tester">Tester</label>
+                </div>
+                <div style="display: flex;"> <input type="radio" id="developer" name="role" value="Developer" required>
+                    <label for="developer">Developer</label>
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                <button type="submit">Sign In</button>
+
+            </div>
+
+        </form>
+        <div style="display: flex;flex-direction: column; row-gap: 10px; width: 100%; align-items: center;">
+            <span style="font-size: 12px; text-align: center;">Do you have an account?</span>
+            <a href="signin.html">Sign in now</a>
+        </div>
+
+    </div>
+
+
+    <script src="signUp.js"></script>
+
+
+</body>
+
+</html>

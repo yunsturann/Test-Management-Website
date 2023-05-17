@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Yunus",
+        "surname": "Turan",
+        "username": "Leptonion",
+        "password": "123456",
+        "role": "Admin"
+    },
+    {
+        "name": "Yunus",
+        "surname": "Turan",
+        "username": "Leptonion1",
+        "password": "123456",
+        "role": "Developer"
+    },
+    {
+        "name": "Yunus",
+        "surname": "Turan",
+        "username": "Leptonion2",
+        "password": "123456",
+        "role": "Tester"
+    },
+    {
+        "name": "Oguzhan",
+        "surname": "Ozdemir",
+        "username": "7ough",
+        "password": "123456",
+        "role": "Admin"
+    },
+    {
+        "name": "Oguzhan",
+        "surname": "Ozdemir",
+        "username": "7ough1",
+        "password": "123456",
+        "role": "Developer"
+    },
+    {
+        "name": "Oguzhan",
+        "surname": "Ozdemir",
+        "username": "7ough2",
+        "password": "123456",
+        "role": "Tester"
+    },
+    {
+        "name": "İrem",
+        "surname": "Çetiner",
+        "username": "Irenimo",
+        "password": "123456",
+        "role": "Admin"
+    },
+    {
+        "name": "İrem",
+        "surname": "Çetiner",
+        "username": "Irenimo1",
+        "password": "123456",
+        "role": "Developer"
+    },
+    {
+        "name": "İrem",
+        "surname": "Çetiner",
+        "username": "Irenimo2",
+        "password": "123456",
+        "role": "Tester"
+    }
+]
