@@ -2,6 +2,7 @@ var user;
 const todoContainer = document.getElementById("todo");
 const inProcessContainer = document.getElementById("in-process");
 const doneContainer = document.getElementById("done");
+
 window.addEventListener("load", (event) => {
     user = JSON.parse(localStorage.getItem("user"));
     if (user.role == "Manager") {
@@ -31,12 +32,14 @@ const doneTask = (e) => {
          parentContainer.parentElement.nextElementSibling.lastElementChild);
     e.target.parentElement.remove();
 }
-
+const viewInfo = (e) => {
+    
+}
 const addTask = (text, parentContainer) => {
     //console.log(text, parentContainer);
     let item = document.createElement("li");
     item.classList.add("item");
-    item.innerHTML = `<p>${text}</p><i class="uil uil-times"></i><i class="uil uil-check"></i>`;
+    item.innerHTML = `<p>${text}</p> <i class="uil uil-info"></i><i class="uil uil-times"></i><i class="uil uil-check"></i>`;
     item.draggable = true;
     parentContainer.appendChild(item);
 
@@ -44,8 +47,9 @@ const addTask = (text, parentContainer) => {
     item.querySelector(".uil-check").addEventListener("click", doneTask);
     // delete button event
     item.querySelector(".uil-times").addEventListener("click",DeleteTask);
-
-
+    //info click event
+    item.querySelector(".uil-info").addEventListener("click",viewInfo);
+    
     // add dragging events
     item.addEventListener("dragstart", () => {
         // Adding dragging class to item after a delay
