@@ -45,6 +45,7 @@ const addTask = (text, parentContainer) => {
     // delete button event
     item.querySelector(".uil-times").addEventListener("click",DeleteTask);
 
+
     // add dragging events
     item.addEventListener("dragstart", () => {
         // Adding dragging class to item after a delay
