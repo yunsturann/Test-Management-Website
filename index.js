@@ -33,7 +33,12 @@ const doneTask = (e) => {
     e.target.parentElement.remove();
 }
 const viewInfo = (e) => {
-    
+    var lightbox2 = document.getElementById("lightbox2");
+    lightbox2.style.display = "block";
+    var closeLightbox2 = document.getElementById("lightbox2");
+    closeLightbox2.addEventListener("click", () => {
+        lightbox2.style.display = "none";
+    });
 }
 const addTask = (text, parentContainer) => {
     //console.log(text, parentContainer);
