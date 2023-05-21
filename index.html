@@ -21,8 +21,50 @@
         <i class="uil uil-times"></i>
       </div>
       <form>
+        <div class="form-group row">
+          <label for="input-task" style="text-align: start;" class="col-sm-3 col-form-label "> Task Name</label>
+          <div class="col-sm-9">
+            <input id="input-task" type="text" class="form-control" placeholder="Enter task name" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="purpose-task" style="text-align: start;" class=" col-sm-3 col-form-label"> Task Purpose</label>
+          <div class="col-sm-9">
+            <input id="purpose-task" type="text" class="form-control" placeholder="Enter task purpose" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="language-task" style="text-align: start;" class=" col-sm-3 col-form-label"> Task Language</label>
+          <div class="col-sm-9">
+            <select name="language-task" id="language-task" class="form-control">
+              <option value="C" selected>C</option>
+              <option value="C#">C#</option>
+              <option value="C++">C++</option>
+              <option value="Python">Python</option>
+              <option value="JavaScript">JavaScript</option>
 
-        <input id="input-task" type="text" class="form-control" placeholder="Enter task">
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="role-task" style="text-align: start;" class=" col-sm-3 col-form-label">Employee Role</label>
+          <div class="col-sm-9">
+            <select name="role-task" id="role-task" class="form-control">
+              <option value="Developer" selected>Developer</option>
+              <option value="Tester">Tester</option>
+
+
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="date-task" style="text-align: start;" class=" col-sm-3 col-form-label">Task Date </label>
+          <div class="col-sm-9">
+            <input id="date-task" type="date" class="form-control">
+          </div>
+        </div>
+
         <button id="assign-task" class="btn btn-primary w-50 mt-3">Assign Task</button>
 
       </form>
@@ -30,6 +72,49 @@
 
   </div>
 
+
+  <div class="lightbox" id="lightbox2">
+    <div class="wrapper">
+      <div class="header">
+        <h3> Info Task </h3>
+        <i class="uil uil-times"></i>
+      </div>
+      <form>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label "> Task Name</label>
+          <div class="col-sm-9">
+            <input id="name-info" type="text" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label "> Task Purpose</label>
+          <div class="col-sm-9">
+            <input id="purpose-info" type="text" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label ">Task Language</label>
+          <div class="col-sm-9">
+            <input id="language-info" type="text" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label ">Employee Role
+          </label>
+          <div class="col-sm-9">
+            <input id="role-info" type="text" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label ">Task Date
+          </label>
+          <div class="col-sm-9">
+            <input id="date-info" type="date" class="form-control" disabled>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="lg-container">
 
     <header id="header">
@@ -44,7 +129,6 @@
         <h1>Todo</h1>
         <ul id="todo" class="draggable-list">
           <li class="item" draggable="true">
-            <p>Code yaz</p> <i class="uil uil-check"></i>
           </li>
         </ul>
       </div>
