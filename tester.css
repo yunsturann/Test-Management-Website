@@ -1,0 +1,222 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.lg-container{
+    display: flex;
+    flex-direction: column;
+}
+
+#header{
+    height: 140px;
+    background-color: rgb(250, 244, 236);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.lg-container .wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap:1rem;
+    margin-top:40px;
+}
+
+.sm-container h1{
+    font-size:20px;
+    text-align: center;
+    background-color:#e8e6e6;
+    padding:4px;
+}
+
+.list{
+    width:400px;
+    min-height: 340px;
+    background-color: #eeecec;
+    list-style-type: none;
+    padding:1.5rem 0.5rem;
+    color:rgb(0, 0, 0);
+ 
+}
+.list li{
+    margin-top:4px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left:6px;
+}
+
+.list li p{
+    height: 100%;
+    width: 100%;
+    align-self: center;
+}
+
+.list li i{
+    width:34px;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    align-self: center;
+    height: 100%;
+    padding:8px 0;
+}
+
+.list li i:hover{
+    color:green;
+    background-color: rgb(216, 213, 213);
+}
+
+/*
+form{
+    margin:50px;
+    text-align: center;
+}
+form input, form button{
+    padding:1rem;
+}*/
+
+
+
+
+
+/*Add input light Box*/
+
+.lightbox{
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display:none;
+}
+
+.lightbox.show{
+    display:block;
+}
+
+.lightbox .wrapper{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:100%;
+    padding:10px 20px;
+    max-width:90%;
+    height: 90%;
+    background-color: #fff;
+    border-radius: 5px;
+    display:flex;
+    flex-direction: column;
+   
+}
+
+.lightbox .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #393646;
+    padding:4px 8px;
+    border-radius: 4px;
+}
+
+
+.lightbox .header h1{
+    font-size: 28px;
+    color:#fff;
+
+}
+
+.lightbox .header i{
+    width:40px;
+    height: 40px;
+    color:#fff;
+    cursor:pointer;
+    text-align: center;
+    line-height: 40px;
+    background: #8a6cff;
+    font-size:1.2rem;
+    border-radius: 4px;
+}
+
+i:hover{
+    opacity:0.8;
+}
+
+.test-body{
+    display:flex;
+    height:100%;
+    
+}
+
+.test-body .details{
+    background-color: #e5dfdf;
+    height:100%;
+    width: 50%;
+    padding:10px;
+}
+
+.form-code{
+    display:flex;
+    flex-direction: column;
+    max-height: 320px;
+    margin-top:10px;
+}
+
+
+/*Chatbot section*/
+
+.test-body .chatbot{
+    background-color: #4D4D4D;
+    height:100%;
+    width: 50%;
+}
+
+.test-body .chat{
+    max-height:440px;
+    min-height:80%;
+    background-color: #fff;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat .chat-list{
+    background-color: #2b2a2a;
+    flex-grow: 1;
+    margin:0;
+    overflow-y: auto;
+    list-style: none;
+    padding: 4px;
+}
+
+
+.chat-list li{
+    color:white;
+    background-color: rgb(157, 156, 156);
+    margin-top:2px;
+    border-radius: 4px;
+    padding:4px;
+    font-size:14px;
+    font-weight: 500;
+}
+
+.chat-list li:nth-child(even) {
+    background-color: rgb(125, 120, 120);    
+}
+
+
+.chat form{
+    padding:6px;
+    background-color: #393646;
+}
+

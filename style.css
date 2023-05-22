@@ -51,13 +51,8 @@
     background-color: white;
     display: flex;
     justify-content: space-between;
-<<<<<<< HEAD
     align-items: stretch;
     padding-left: 6px;
-=======
-    align-items: center;
-    padding-left:6px;
->>>>>>> 11493766a6a4033417af829812c125be58ba7cb9
 }
 
 .draggable-list li p {
@@ -78,19 +73,12 @@
     cursor: pointer;
     align-self: center;
     height: 100%;
-<<<<<<< HEAD
     padding: 10px 0;
 }
 
 .draggable-list li i:hover {
 
     color: green;
-=======
-    padding:8px 0;
-}
-.draggable-list li i:hover{
-    color:green;
->>>>>>> 11493766a6a4033417af829812c125be58ba7cb9
     background-color: rgb(216, 213, 213);
 }
 
