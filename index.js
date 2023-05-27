@@ -58,11 +58,8 @@ const doneTask = (e) => {
         alert("The task done completely");
         e.target.parentElement.classList.add("bg-success");
 
-        e.target.parentElement.children[2].remove();
-        console.log(e.target.parentElement)
-
-        e.target.parentElement.children[1].remove();
-        console.log(e.target.parentElement)
+        e.target.parentElement.children[3].style.display = "none";
+        e.target.parentElement.children[2].style.display = "none";
 
         setTesterTask(e.target.parentElement.id);
         return;

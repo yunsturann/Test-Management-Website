@@ -16,11 +16,11 @@ const showTestScreen = (e) => {
         if (element.id == e.target.parentElement.id) {
             document.getElementById("name-info").value = element.name;
             document.getElementById("purpose-info").value = element.purpose;
-
             document.getElementById("language-info").value = element.language;
             document.getElementById("role-info").value = element.role;
             document.getElementById("date-info").value = element.role;
             document.getElementById("date-info").value = element.date;
+            document.getElementById("code").value = element.codeinput;
 
         }
     });

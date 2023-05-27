@@ -27,11 +27,13 @@ function signIn(e) {
                 person.surname = data.surname;
                 person.role = data.role;
                 localStorage.setItem('user', JSON.stringify(person));
-                if (data.role == "Developer") {
-                    window.location.href = "index.html";
-                }
-                else if (data.role == "Tester") {
+                if (data.role == "Tester") {
+
                     window.location.href = "tester.html";
+                }
+                else {
+                    window.location.href = "index.html";
+
                 }
             }
             else {
