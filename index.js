@@ -57,8 +57,14 @@ const doneTask = (e) => {
     if (parentContainer.id === "done") {
         alert("The task done completely");
         e.target.parentElement.classList.add("bg-success");
+
         e.target.parentElement.children[2].remove();
-        e.target.parentElement.children[2].remove(); setTesterTask(e.target.parentElement.id);
+        console.log(e.target.parentElement)
+
+        e.target.parentElement.children[1].remove();
+        console.log(e.target.parentElement)
+
+        setTesterTask(e.target.parentElement.id);
         return;
 
     }
@@ -240,9 +246,6 @@ function changeLocal(id, parentContainer) {
 }
 function setTesterTask(id) {
 
-
-
-
     tasks.forEach(element => {
         if (element.id == id) {
             /*    task.id = element.id;
@@ -260,6 +263,7 @@ function setTesterTask(id) {
                 localStorage.setItem('testerTask', JSON.stringify(testerTask));
             }
             else {
+                console.log("a")
                 var testerTask = JSON.parse(localStorage.getItem('testerTask'));
                 testerTask.push(element);
                 localStorage.setItem('testerTask', JSON.stringify(testerTask));
