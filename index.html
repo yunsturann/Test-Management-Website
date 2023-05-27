@@ -36,6 +36,7 @@
           <label for="language-task" style="text-align: start;" class=" col-sm-3 col-form-label"> Task Language</label>
           <div class="col-sm-9">
             <select name="language-task" id="language-task" class="form-control">
+              <option value="none" selected>none</option>
               <option value="C" selected>C</option>
               <option value="C#">C#</option>
               <option value="C++">C++</option>
@@ -111,9 +112,15 @@
             <input id="date-info" type="date" class="form-control" disabled>
           </div>
         </div>
-
-      <!-- add task info -->
-
+        <div class="form-group row" id="codeInput">
+          <label style="text-align: start;" class="col-sm-3 col-form-label ">Code Input</label>
+          <div class="col-sm-9">
+            <textarea id="code-info" rows="10" cols="60">
+              </textarea>
+          </div>
+        </div>
+        <!-- add task info -->
+        <button type="button" id="saveInfo" class="btn btn-primary">Save</button>
       </form>
     </div>
   </div>
@@ -125,7 +132,7 @@
       <h1>Image</h1>
     </header>
 
-    
+
     <div class="wrapper">
 
       <div class="sm-container">

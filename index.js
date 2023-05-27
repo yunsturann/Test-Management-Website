@@ -1,6 +1,6 @@
 var user;
 var tasks = []
-var task = { name: "", purpose: "", language: "", role: "", date: new Date(), container: "" }
+var task = { id: 0, name: "", purpose: "", language: "", role: "", date: new Date(), container: "", codeinput: "" }
 
 const todoContainer = document.getElementById("todo");
 const inProcessContainer = document.getElementById("in-process");
@@ -32,10 +32,9 @@ window.addEventListener("load", (event) => {
 const DeleteTask = (e) => {
     if (confirm("Are you sure to delete to task ?")) {
         getLocal();
-        console.log(tasks)
 
         tasks.forEach(function (task, index, arr) {
-            if (e.target.parentElement.children[0].innerHTML == task.name) {
+            if (e.target.parentElement.id == task.id) {
                 arr.splice(index, 1);
                 return;
             }
@@ -53,30 +52,46 @@ const DeleteTask = (e) => {
 // add todo
 
 const doneTask = (e) => {
+    console.log()
     const parentContainer = e.target.parentElement.parentElement;
     if (parentContainer.id === "done") {
         alert("The task done completely");
         e.target.parentElement.classList.add("bg-success");
+        setTesterTask(e.target.parentElement.id);
         return;
+
     }
     //console.log(e.target.parentElement.children[0].textContent)
-    changeLocal(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
-    addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
+    console.log(e.target.parentElement.id);
+    changeLocal(e.target.parentElement.id, parentContainer);
+    addTask(e.target.parentElement.children[0].textContent, parentContainer);
     e.target.parentElement.remove();
 }
 const viewInfo = (e) => {
     var lightbox2 = document.getElementById("lightbox2");
+    document.getElementById("saveInfo").addEventListener("click", () => {
+        task.codeinput = document.getElementById("code-info").value;
+        changeLocal(e.target.parentElement.id, "1")
+    })
     lightbox2.style.display = "block";
     var closeLightbox2 = document.getElementById("lightbox2").children[0].children[0].children[1];
-
     tasks.forEach(task => {
-        if (e.target.parentElement.children[0].textContent == task.name) {
+        if (e.target.parentElement.id == task.id) {
             //console.log(task);
             document.getElementById("name-info").value = task.name;
             document.getElementById("purpose-info").value = task.purpose;
             document.getElementById("language-info").value = task.language;
             document.getElementById("role-info").value = task.role;
             document.getElementById("date-info").value = task.date;
+            if (task.language == "none") {
+                document.getElementById("codeInput").style.display = "none";
+            }
+            else {
+                document.getElementById("codeInput").style.display = "";
+                document.getElementById("code-info").value = task.codeinput;
+
+
+            }
 
 
         }
@@ -89,6 +104,7 @@ const addTask = (text, parentContainer) => {
     let item = document.createElement("li");
     item.classList.add("item");
     item.innerHTML = `<p>${text}</p> <i class="uil uil-info"></i><i class="uil uil-times"></i><i class="uil uil-check"></i>`; item.draggable = true;
+    item.id = task.id;
     parentContainer.appendChild(item);
 
     // done click event
@@ -108,12 +124,14 @@ const addTask = (text, parentContainer) => {
 
 const submitTodo = (e, parentContainer) => {
     e.preventDefault();
+    task.id = Date.now();
     task.name = document.getElementById("input-task").value;
     task.purpose = document.getElementById("purpose-task").value;;
     task.language = document.getElementById('language-task').options[document.getElementById('language-task').selectedIndex].value
     task.role = document.getElementById('role-task').options[document.getElementById('role-task').selectedIndex].value
     task.date = document.getElementById("date-task").value;
     task.container = "todoContainer";
+
 
     if (task.name == "" || task.purpose == "" || !task.date) {
         alert("Please fill in all the blanks!")
@@ -138,7 +156,9 @@ const initTodoContainer = (e, parentContainer) => {
     let nextSibling = siblings.find(sibling => {
         return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
     });
-    changeLocal(draggingItem.children[0].innerHTML, parentContainer);
+    console.log(draggingItem);
+
+    changeLocal(draggingItem.id, parentContainer);
     // Inserting the dragging item before the found sibling
     parentContainer.insertBefore(draggingItem, nextSibling);
 }
@@ -155,7 +175,9 @@ doneContainer.addEventListener("dragenter", e => e.preventDefault());
 
 function setLocal() {
     getLocal();
+
     tasks.push(task);
+
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 function getLocal() {
@@ -166,36 +188,78 @@ function getLocal() {
 }
 function setcontainer() {
     getLocal()
-    tasks.forEach(task => {
-        console.log(task);
-        if (task.container == "todoContainer")
-            addTask(task.name, todoContainer)
-        if (task.container == "inProcessContainer")
-            addTask(task.name, inProcessContainer)
-        if (task.container == "doneContainer")
-            addTask(task.name, doneContainer)
+    console.log(tasks);
+
+    tasks.forEach(element => {
+        if (element.container == "todoContainer") {
+            task.id = element.id;
+            addTask(element.name, todoContainer);
+        }
+        if (element.container == "inProcessContainer") {
+            task.id = element.id;
+            addTask(element.name, inProcessContainer)
+
+        }
+        if (element.container == "doneContainer") {
+            task.id = element.id;
+            addTask(element.name, doneContainer)
+
+        }
 
     });
 }
-function changeLocal(name, parentContainer) {
+function changeLocal(id, parentContainer) {
     //console.log("2")
+    if (parentContainer == "1") {
+        tasks.forEach(element => {
+            if (element.id == id) {
+                element.codeinput = task.codeinput;
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                return;
+            }
+        });
+    }
+    else {
+        tasks.forEach(element => {
+            if (element.id == id) {
+                element.container =
+                    parentContainer.id == "todo"
+                        ? 'todoContainer'
+                        : parentContainer.id == "in-process"
+                            ? 'inProcessContainer'
+                            : 'doneContainer';
+                //console.log("2")
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                return;
 
-    tasks.forEach(task => {
-        if (task.name == name) {
-            console.log(parentContainer);
-            task.container =
-                parentContainer.id == "todo"
-                    ? 'todoContainer'
-                    : parentContainer.id == "in-process"
-                        ? 'inProcessContainer'
-                        : 'doneContainer';
-            //console.log("2")
+            }
+        });
+    }
 
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-            return;
-
+}
+function setTesterTask(id) {
+    tasks.forEach(element => {
+        if (element.id == id) {
+            /*    task.id = element.id;
+                task.name = element.name;
+                task.purpose = element.purpose;
+                task.language = element.language;
+                task.role = element.role;
+                task.date = element.date;
+                task.container = element.container;
+                task.codeinput = element.code;
+    */
+            if (localStorage.getItem('testerTask') == null) {
+                var testerTask = [];
+                testerTask.push(element);
+                localStorage.setItem('testerTask', JSON.stringify(testerTask));
+            }
+            else {
+                var testerTask = localStorage.getItem('testerTask');
+                testerTask.push(element);
+                localStorage.setItem('testerTask', JSON.stringify(testerTask));
+            }
         }
     });
-
 }
 
