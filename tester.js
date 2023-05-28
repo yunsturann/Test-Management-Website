@@ -58,6 +58,28 @@ const removeTask = (e) =>{
 
 }
 
+const moveTask = (e) =>{
+
+    if(e.target.parentElement.parentElement.id == "done"){
+        alert("This task is done completely!");
+        e.target.parentElement.classList.add("task-done");
+        const id = e.target.parentElement.id;
+        e.target.remove();
+
+        for(let i = 0; i< testerTasks.length;i++){
+            if(testerTasks[i].id == id){
+                testerTasks[i].container = "done";
+                localStorage.setItem("testerTask",JSON.stringify(testerTasks));
+                return;
+            }
+        }
+        return;
+    }
+
+    doneContainer.appendChild(e.target.parentElement);
+
+}
+
 const addTask = (task, parentContainer) => {
     let element = document.createElement("li");
     element.classList.add("item");
@@ -66,9 +88,13 @@ const addTask = (task, parentContainer) => {
     element.querySelector("p").textContent = task.name;
 
     element.querySelector(".uil-rocket").addEventListener("click", showTestScreen);
-    element.querySelector(".uil-check").addEventListener("click", (e)=> doneContainer.appendChild(e.target.parentElement));
+    element.querySelector(".uil-check").addEventListener("click", moveTask);
     element.querySelector(".uil-times").addEventListener("click",removeTask);
    
+    if(task.container == "done"){
+        element.classList.add("task-done");
+        element.querySelector(".uil-check").remove();
+    }
 
     parentContainer.appendChild(element);
 }
@@ -78,7 +104,14 @@ const loadContent = () => {
         testerTasks = [];
     } else {
         testerTasks = JSON.parse(localStorage.getItem("testerTask"));
-        testerTasks.forEach(task => addTask(task, todoContainer));
+        testerTasks.forEach(task => {
+            if(task.container == "done"){
+                addTask(task, doneContainer);
+            }else{
+                addTask(task, todoContainer);
+            }
+            
+        });
     }
 
     const user = JSON.parse(localStorage.getItem("user"));

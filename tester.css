@@ -93,6 +93,11 @@
     background-color: rgb(216, 213, 213);
 }
 
+.list li.task-done p{
+    color:green;
+    text-decoration: line-through;
+}
+
 /*Add input light Box*/
 
 .lightbox {
