@@ -1,15 +1,18 @@
 
 const todoContainer = document.getElementById("todo");
 const doneContainer = document.getElementById("done");
+const toDeveloper = document.getElementById("dev-page-btn");
 
 const lightbox = document.querySelector(".lightbox");
+
+document.getElementById("chira").addEventListener("click",()=>{if(confirm("Are you sure to go to signin.html")) window.location.assign("signin.html");});
 document.querySelector(".lightbox .uil-times").addEventListener("click", closeTestScreen);
 
 let testerTasks = [];
 //Tasks 
 
 const showTestScreen = (e) => {
-    console.log(e.target.parentElement.id)
+    //console.log(e.target.parentElement.id)
     lightbox.classList.add("show");
     //
     testerTasks.forEach(element => {
@@ -31,6 +34,30 @@ function closeTestScreen() {
     lightbox.classList.remove("show");
 }
 
+const removeTask = (e) =>{
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if(user.role != "Manager"){
+        alert("Only Manager Can Remove Tasks!");
+        return;
+    }
+
+    if(!confirm("Are u sure to delete task!")) return;
+
+    const id = e.target.parentElement.id;
+
+    e.target.parentElement.remove();
+
+    for(let i = 0; i< testerTasks.length;i++){
+        if(testerTasks[i].id == id){
+            testerTasks.splice(i,1);
+            localStorage.setItem("testerTask",JSON.stringify(testerTasks));
+            return;
+        }
+    }
+
+}
+
 const addTask = (task, parentContainer) => {
     let element = document.createElement("li");
     element.classList.add("item");
@@ -39,8 +66,9 @@ const addTask = (task, parentContainer) => {
     element.querySelector("p").textContent = task.name;
 
     element.querySelector(".uil-rocket").addEventListener("click", showTestScreen);
-    console.log(element)
-    console.log(parentContainer)
+    element.querySelector(".uil-check").addEventListener("click", (e)=> doneContainer.appendChild(e.target.parentElement));
+    element.querySelector(".uil-times").addEventListener("click",removeTask);
+   
 
     parentContainer.appendChild(element);
 }
@@ -52,8 +80,15 @@ const loadContent = () => {
         testerTasks = JSON.parse(localStorage.getItem("testerTask"));
         testerTasks.forEach(task => addTask(task, todoContainer));
     }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user.role == "Manager") {
+        toDeveloper.style.display = "block";
+    }
 }
 
+toDeveloper.addEventListener("click", ()=> window.location.assign("index.html"));
 document.addEventListener("DOMContentLoaded", loadContent);
 
 // Lightbox and chatlog 
@@ -63,6 +98,7 @@ const chatInput = document.getElementById("chat-input");
 const sendBtn = document.getElementById("send-btn");
 const codeCopyBtn = document.querySelector(".header-code i");
 const codeText = document.getElementById("code");
+const clearChatBtn = document.getElementById("clear");
 
 const btnTestCases = document.getElementById("btn-test-cases");
 const btnSyntax = document.getElementById("btn-syntax");
@@ -74,6 +110,8 @@ function copyCode(e) {
     alert("Code copied succesfully!");
 }
 
+
+clearChatBtn.addEventListener("click",() => {if(confirm("Are you sure to clear chat ?")) chatContainer.innerHTML = "";});
 codeCopyBtn.addEventListener("click", copyCode);
 
 
@@ -101,7 +139,7 @@ const getChatResponse = async (incomingChatDiv) => {
         userText += ` for the code. The code is =  ${codeText.value}`;
     }
 
-    console.log(userText);
+    //console.log(userText);
 
     const requestOptions = {
         method: 'POST',
@@ -184,6 +222,7 @@ const handleOutgoingChat = (e) => {
     chatContainer.appendChild(outgoingChatDiv);
     setTimeout(showTypingAnimation, 500);
 }
+
 
 sendBtn.addEventListener("click", handleOutgoingChat);
 btnSyntax.addEventListener("click", handleOutgoingChat);

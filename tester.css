@@ -32,6 +32,10 @@
 
 }
 
+#chira{
+    cursor:pointer;
+}
+
 .lg-container .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -177,6 +181,11 @@ i:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header-code .fa-copy:hover{
+    cursor: pointer;
+    color:red;
 }
 
 #code {

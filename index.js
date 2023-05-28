@@ -6,6 +6,10 @@ const todoContainer = document.getElementById("todo");
 const inProcessContainer = document.getElementById("in-process");
 const doneContainer = document.getElementById("done");
 const btnSubmit = document.getElementById("assign-task");
+const toTesterBtn = document.getElementById("test-page-btn");
+
+toTesterBtn.addEventListener("click", ()=> window.location.assign("tester.html"));
+document.getElementById("chira").addEventListener("click",()=>{if(confirm("Are you sure to go to signin.html")) window.location.assign("signin.html");});
 
 //LightBox
 const btnAddTask = document.getElementById("btn-add-task");
@@ -24,12 +28,18 @@ btnAddTask.addEventListener("click", () => {
 window.addEventListener("load", (event) => {
     user = JSON.parse(localStorage.getItem("user"));
     if (user.role == "Manager") {
-        document.getElementById("btn-add-task").style.display = "block";
+        document.getElementById("mid-header").style.display = "block";
     }
     setcontainer();
 });
 
 const DeleteTask = (e) => {
+
+    if(user.role != "Manager"){
+        alert("Only Manager Can Remove Tasks!");
+        return;
+    }
+
     if (confirm("Are you sure to delete to task ?")) {
         getLocal();
 
@@ -39,20 +49,17 @@ const DeleteTask = (e) => {
                 return;
             }
         });
-        console.log(tasks)
+        
         localStorage.setItem('tasks', JSON.stringify(tasks));
-
-        console.log(e.target.parentElement.children[0].innerHTML);
         e.target.parentElement.remove();
 
     }
 }
 
-
 // add todo
 
 const doneTask = (e) => {
-    console.log()
+    
     const parentContainer = e.target.parentElement.parentElement;
     if (parentContainer.id === "done") {
         alert("The task done completely");
@@ -66,7 +73,7 @@ const doneTask = (e) => {
 
     }
     //console.log(e.target.parentElement.children[0].textContent)
-    console.log(e.target.parentElement.id);
+   // console.log(e.target.parentElement.id);
     changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
     addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
     e.target.parentElement.remove();

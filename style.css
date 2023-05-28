@@ -20,6 +20,10 @@
 
 }
 
+#chira{
+    cursor: pointer;
+}
+
 .lg-container .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -146,15 +150,9 @@ form button {
     border-radius: 4px;
 }
 
-<<<<<<< HEAD
 i:hover{
     opacity:0.8;
 }
 .content {
     margin-top: 0px;
 }
-=======
-i:hover {
-    opacity: 0.8;
-}
->>>>>>> d4faaff6bc73c55841f1b283fbc0bf96b1537185
