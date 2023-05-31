@@ -91,7 +91,7 @@ const doneTask = (e) => {
 
             changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
             addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
-            setTesterTask(e.target.parentElement.id);
+           // setTesterTask(e.target.parentElement.id);
 
             e.target.parentElement.remove();
             alert("The task done completely");
@@ -99,21 +99,10 @@ const doneTask = (e) => {
         } else {
             checkNfa("Error");
         }
-        /* alert("The task done completely");
-         e.target.parentElement.classList.add("bg-success");
- 
-         e.target.parentElement.children[3].style.display = "none";
-         e.target.parentElement.children[2].style.display = "none";
- 
-         setTesterTask(e.target.parentElement.id);
-         return;*/
+       
 
     }
-    //console.log(e.target.parentElement.children[0].textContent)
-    // console.log(e.target.parentElement.id);
-    /*changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
-    addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
-    e.target.parentElement.remove();*/
+  
 }
 const viewInfo = (e) => {
     var lightbox2 = document.getElementById("lightbox2");
@@ -221,15 +210,6 @@ const initTodoContainer = (e, parentContainer) => {
     parentContainer.insertBefore(draggingItem, nextSibling);
 }
 
-/*todoContainer.addEventListener("dragover", e => initTodoContainer(e, todoContainer));
-todoContainer.addEventListener("dragenter", e => e.preventDefault());
-
-inProcessContainer.addEventListener("dragover", e => initTodoContainer(e, inProcessContainer));
-inProcessContainer.addEventListener("dragenter", e => e.preventDefault());
-
-doneContainer.addEventListener("dragover", e => initTodoContainer(e, doneContainer));
-doneContainer.addEventListener("dragenter", e => e.preventDefault());
-*/
 
 function setLocal() {
     getLocal();
@@ -296,42 +276,7 @@ function changeLocal(id, parentContainer) {
     }
 
 }
-function setTesterTask(id) {
 
-    tasks.forEach(element => {
-        if (element.id == id) {
-            /*    task.id = element.id;
-                task.name = element.name;
-                task.purpose = element.purpose;
-                task.language = element.language;
-                task.role = element.role;
-                task.date = element.date;
-                task.container = element.container;
-                task.codeinput = element.code;
-    */
-            if (localStorage.getItem('testerTask') == null) {
-                var testerTask = [];
-                testerTask.push(element);
-                localStorage.setItem('testerTask', JSON.stringify(testerTask));
-            }
-            else {
-                console.log("a")
-                var testerTask = JSON.parse(localStorage.getItem('testerTask'));
-                testerTask.push(element);
-                localStorage.setItem('testerTask', JSON.stringify(testerTask));
-            }
-        }
-    });
-
-    /* tasks.forEach(function (task, index, arr) {
-         if (id == task.id) {
-             arr.splice(index, 1);
-             return;
-         }
-     });
-     localStorage.setItem('tasks', JSON.stringify(tasks));*/
-
-}
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "nfa.xml", true);
 xhr.onreadystatechange = function () {

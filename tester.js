@@ -9,10 +9,12 @@ var task = { id: 0, name: "", purpose: "", language: "", role: "", date: new Dat
 var xmlData;
 var checkButton = document.getElementById("checkButton");
 var testcompletion = document.getElementById("testcompletion");
+
 checkButton.children[0].addEventListener("click", function () {
     // checkNfa("Success");
     alert("Code syntax checked.");
     task.container = "doneContainer";
+
 
     if (task.currentState == "CheckSyntax") {
         btnSyntax.style.display = "none";
@@ -68,7 +70,7 @@ checkButton.children[1].addEventListener("click", function () {
 document.getElementById("chira").addEventListener("click", () => { if (confirm("Are you sure to go to signin.html")) window.location.assign("signin.html"); });
 document.querySelector(".lightbox .uil-times").addEventListener("click", closeTestScreen);
 
-let testerTasks = [];
+
 //Tasks 
 
 const showTestScreen = (e) => {
@@ -77,7 +79,7 @@ const showTestScreen = (e) => {
     // 
     getTask(e.target.parentElement.id);
     if (task.currentState == "CheckSyntax") {
-        console.log("a")
+       
         btnSyntax.style.display = "block";
         btnTestCases.style.display = "none";
         testcompletion.style.display = "none"
@@ -86,7 +88,7 @@ const showTestScreen = (e) => {
 
     }
     if (task.currentState === "CheckTestCase") {
-        console.log("a")
+     
         checkButton.style.display = "block";
         btnSyntax.style.display = "none";
         btnTestCases.style.display = "block";
@@ -94,7 +96,7 @@ const showTestScreen = (e) => {
 
     }
     if (task.currentState === "TestCompletion") {
-        console.log("a")
+       
         btnSyntax.style.display = "none";
         btnTestCases.style.display = "none";
         testcompletion.style.display = "block"
@@ -103,7 +105,7 @@ const showTestScreen = (e) => {
 
     }
     if (task.currentState === "ProjectDelivery") {
-        console.log("a")
+        
         btnSyntax.style.display = "none";
         btnTestCases.style.display = "none";
         testcompletion.style.display = "none"
@@ -141,15 +143,16 @@ const removeTask = (e) => {
 
     const id = e.target.parentElement.id;
 
-    e.target.parentElement.remove();
+    getLocal();
 
-    for (let i = 0; i < testerTasks.length; i++) {
-        if (testerTasks[i].id == id) {
-            testerTasks.splice(i, 1);
-            localStorage.setItem("testerTask", JSON.stringify(testerTasks));
-            return;
+    for(let i = 0; i<tasks.length;i++){
+        if(tasks[i].id == e.target.parentElement.id){
+            tasks.splice(i,1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
         }
     }
+        
+    e.target.parentElement.remove();
 
 }
 
@@ -161,13 +164,6 @@ const moveTask = (e) => {
         const id = e.target.parentElement.id;
         e.target.remove();
 
-        for (let i = 0; i < testerTasks.length; i++) {
-            if (testerTasks[i].id == id) {
-                testerTasks[i].container = "done";
-                localStorage.setItem("testerTask", JSON.stringify(testerTasks));
-                return;
-            }
-        }
         return;
     }
 
@@ -195,19 +191,7 @@ const addTask = (task, parentContainer) => {
 }
 
 const loadContent = () => {
-    /* if (localStorage.getItem("testerTask") == null) {
-         testerTasks = [];
-     } else {
-         testerTasks = JSON.parse(localStorage.getItem("testerTask"));
-         testerTasks.forEach(task => {
-             if (task.container == "done") {
-                 addTask(task, doneContainer);
-             } else {
-                 addTask(task, todoContainer);
-             }
- 
-         });
-     }*/
+
     getLocal();
 
     tasks.forEach(task => {
@@ -222,6 +206,7 @@ const loadContent = () => {
 
     });
 }
+
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (user.role == "Manager") {
@@ -379,15 +364,6 @@ xhr.open("GET", "nfa.xml", true);
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
         xmlData = xhr.responseXML; // XML yanıtını alın
-        console.log(xmlData);
-
-        // XML içeriğini işleyin
-        /* var elements = xmlData.getElementsByTagName("element");
-         for (var i = 0; i < elements.length; i++) {
-             var element = elements[i];
-             var text = element.textContent;
-             console.log(text);
-         }*/
     }
 };
 xhr.send();
@@ -412,7 +388,7 @@ function getTask(id) {
             task.date = element.date;
             task.codeinput = element.codeinput;
             task.currentState = element.currentState;
-            console.log(task);
+           
         }
     });
 }
