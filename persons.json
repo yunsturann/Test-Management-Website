@@ -3,35 +3,35 @@
         "name": "Yunus",
         "surname": "Turan",
         "username": "Leptonion",
-        "password": "123456",
+        "password": "Qwerty1.",
         "role": "Manager"
     },
     {
         "name": "Yunus",
         "surname": "Turan",
         "username": "Leptonion1",
-        "password": "123456",
+        "password": "Qwerty12.",
         "role": "Developer"
     },
     {
         "name": "Yunus",
         "surname": "Turan",
         "username": "Leptonion2",
-        "password": "123456",
+        "password": "Qwerty123.",
         "role": "Tester"
     },
     {
         "name": "Oguzhan",
         "surname": "Ozdemir",
         "username": "7ough",
-        "password": "123456",
+        "password": "Qwerty1234.",
         "role": "Manager"
     },
     {
         "name": "Oguzhan",
         "surname": "Ozdemir",
         "username": "7ough1",
-        "password": "123456",
+        "password": "Qwerty12345.",
         "role": "Developer"
     },
     {

@@ -164,12 +164,14 @@ const createElement = (html, className) => {
 const getChatResponse = async (incomingChatDiv) => {
     const API_URL = "http://localhost:3000";
     const pElement = document.createElement("p");
+    const codeLanguage = document.querySelector("#language-info").value;
+    //console.log(codeLanguage);
 
     if (userText == "Produce Test Cases") {
-        userText += ` for the code.The code is = ${codeText.value}`;
+        userText += ` for the code.The code language is = ${codeLanguage}. The code is = ${codeText.value}`;
     }
     else if (userText == "Check syntax of Code") {
-        userText += ` for the code. The code is =  ${codeText.value}`;
+        userText += ` for the code.The code language is = ${codeLanguage}. The code is =  ${codeText.value}`;
     }
 
     //console.log(userText);
