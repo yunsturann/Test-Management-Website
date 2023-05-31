@@ -1,0 +1,100 @@
+<nfai>
+  <states>
+    <state>AddTask</state>
+    <state>WritingCode</state>
+    <state>CodeInputCheck</state>
+    <state>CheckSyntax</state>
+    <state>CheckTestCase</state>
+    <state>TestCompletion</state>
+    <state>ProjectDelivery</state>
+
+  </states>
+  
+  <initialState>AddTask</initialState>
+  <FinalState>ProjectDelivery</FinalState>
+
+  <successStates>
+    <state>WritingCode</state>
+    <state>CodeInputCheck</state>
+    <state>CheckSyntax</state>
+    <state>CheckTestCase</state>
+    <state>TestCompletion</state>
+    <state>ProjectDelivery</state>
+  </successStates>
+  
+  <errorStates>
+    <state>AddTask</state>
+    <state>WritingCode</state>
+    <state>CheckTestCase</state>
+    <state>TestCompletion</state>
+  </errorStates>
+  
+  <transitions>
+
+    <transition>
+      <from>AddTask</from>
+      <to>WritingCode</to>
+      <input>Success</input>
+    </transition>
+    <transition>
+      <from>AddTask</from>
+      <to>AddTask</to>
+      <input>Error</input>
+    </transition>
+    
+     <transition>
+      <from>WritingCode</from>
+      <to>CodeInputCheck</to>
+      <input>Success</input>
+    </transition>
+    <transition>
+      <from>WritingCode</from>
+      <to>WritingCode</to>
+      <input>Error</input>
+    </transition>
+
+     <transition>
+      <from>CodeInputCheck</from>
+      <to>CheckSyntax</to>
+      <input>Success</input>
+    </transition>
+    <transition>
+      <from>CodeInputCheck</from>
+      <to>WritingCode</to>
+      <input>Error</input>
+    </transition>
+    
+     <transition>
+      <from>CheckSyntax</from>
+      <to>CheckTestCase</to>
+      <input>Success</input>
+    </transition>
+     <transition>
+      <from>CheckSyntax</from>
+      <to>WritingCode</to>
+      <input>Error</input>
+    </transition>
+
+      <transition>
+      <from>CheckTestCase</from>
+      <to>TestCompletion</to>
+      <input>Success</input>
+    </transition>
+     <transition>
+      <from>CheckSyntax</from>
+      <to>WritingCode</to>
+      <input>Error</input>
+    </transition>
+    
+    <transition>
+      <from>TestCompletion</from>
+      <to>ProjectDelivery</to>
+      <input>Success</input>
+    </transition>
+     <transition>
+      <from>TestCompletion</from>
+      <to>CheckTestCase</to>
+      <input>Error</input>
+    </transition>
+  </transitions>
+</nfai>

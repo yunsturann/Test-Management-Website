@@ -46,7 +46,7 @@
             </select>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row" style="display: none;">
           <label for="role-task" style="text-align: start;" class=" col-sm-3 col-form-label">Employee Role</label>
           <div class="col-sm-9">
             <select name="role-task" id="role-task" class="form-control">
@@ -101,7 +101,7 @@
         <div class="form-group row">
           <label style="text-align: start;" class="col-sm-3 col-form-label ">Employee Role
           </label>
-          <div class="col-sm-9">
+          <div class="col-sm-9" style="display: none;">
             <input id="role-info" type="text" class="form-control" disabled>
           </div>
         </div>
@@ -112,13 +112,21 @@
             <input id="date-info" type="date" class="form-control" disabled>
           </div>
         </div>
+        <div class="form-group row">
+          <label style="text-align: start;" class="col-sm-3 col-form-label ">Current State
+          </label>
+          <div class="col-sm-9">
+            <input id="state-info" type="text" class="form-control" disabled>
+          </div>
+        </div>
         <div class="form-group row" id="codeInput">
           <label style="text-align: start;" class="col-sm-3 col-form-label ">Code Input</label>
           <div class="col-sm-9">
-            <textarea id="code-info" rows="10" cols="55" style="resize: none;">
+            <textarea id="code-info" rows="10" cols="55" style="resize: none; " value="">
               </textarea>
           </div>
         </div>
+
         <!-- add task info -->
         <button type="button" id="saveInfo" class="btn btn-primary">Save</button>
       </form>
@@ -129,11 +137,11 @@
     <header id="header">
       <h1 id="chira">Chira</h1>
       <div id="mid-header" style="display: none;">
-        <button id="btn-add-task" class="btn btn-secondary px-5" >Add Task</button>
+        <button id="btn-add-task" class="btn btn-secondary px-5">Add Task</button>
         <button id="test-page-btn" class="btn btn-outline-secondary">Go to tester screen</button>
       </div>
-      
-      
+
+
       <h1>Image</h1>
     </header>
 

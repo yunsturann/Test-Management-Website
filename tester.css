@@ -32,8 +32,8 @@
 
 }
 
-#chira{
-    cursor:pointer;
+#chira {
+    cursor: pointer;
 }
 
 .lg-container .wrapper {
@@ -93,8 +93,8 @@
     background-color: rgb(216, 213, 213);
 }
 
-.list li.task-done p{
-    color:green;
+.list li.task-done p {
+    color: green;
     text-decoration: line-through;
 }
 
@@ -188,9 +188,9 @@ i:hover {
     align-items: center;
 }
 
-.header-code .fa-copy:hover{
+.header-code .fa-copy:hover {
     cursor: pointer;
-    color:red;
+    color: red;
 }
 
 #code {
@@ -209,10 +209,11 @@ i:hover {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: space-between;
 }
 
 #form-btns button {
-    width: 50%;
+    width: 100%;
 }
 
 

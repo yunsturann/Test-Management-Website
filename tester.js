@@ -4,8 +4,68 @@ const doneContainer = document.getElementById("done");
 const toDeveloper = document.getElementById("dev-page-btn");
 
 const lightbox = document.querySelector(".lightbox");
+var tasks = []
+var task = { id: 0, name: "", purpose: "", language: "", role: "", date: new Date(), container: "", codeinput: "", currentState: "" }
+var xmlData;
+var checkButton = document.getElementById("checkButton");
+var testcompletion = document.getElementById("testcompletion");
+checkButton.children[0].addEventListener("click", function () {
+    // checkNfa("Success");
+    alert("Code syntax checked.");
+    task.container = "doneContainer";
 
-document.getElementById("chira").addEventListener("click",()=>{if(confirm("Are you sure to go to signin.html")) window.location.assign("signin.html");});
+    if (task.currentState == "CheckSyntax") {
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "block"
+        testcompletion.style.display = "none"
+    }
+    if (task.currentState == "CheckTestCase") {
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "none"
+        testcompletion.style.display = "block"
+
+    }
+    if (task.currentState == "TestCompletion") {
+
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "none"
+        testcompletion.style.display = "none"
+        addTask(task, doneContainer);
+        task.container = "done";
+        alert("Task fully completed!")
+        location.reload();
+
+    }
+    checkNfa("Success");
+    changeLocal();
+    document.getElementById("state-info").value = task.currentState;
+
+
+});
+checkButton.children[1].addEventListener("click", function () {
+    if (task.currentState === "TestCompletion") {
+        checkNfa("Error");
+        checkButton.style.display = "block";
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "block";
+        testcompletion.style.display = "none"
+        changeLocal();
+
+    }
+    else {
+        checkNfa("Error");
+        task.container = "todoContainer"
+        changeLocal();
+        alert("Task being sent back to developer screen.");
+        location.reload();
+    }
+
+
+
+});
+
+
+document.getElementById("chira").addEventListener("click", () => { if (confirm("Are you sure to go to signin.html")) window.location.assign("signin.html"); });
 document.querySelector(".lightbox .uil-times").addEventListener("click", closeTestScreen);
 
 let testerTasks = [];
@@ -14,16 +74,51 @@ let testerTasks = [];
 const showTestScreen = (e) => {
     //console.log(e.target.parentElement.id)
     lightbox.classList.add("show");
-    //
-    testerTasks.forEach(element => {
+    // 
+    getTask(e.target.parentElement.id);
+    if (task.currentState == "CheckSyntax") {
+        console.log("a")
+        btnSyntax.style.display = "block";
+        btnTestCases.style.display = "none";
+        testcompletion.style.display = "none"
+        checkButton.style.display = "block";
+
+
+    }
+    if (task.currentState === "CheckTestCase") {
+        console.log("a")
+        checkButton.style.display = "block";
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "block";
+        testcompletion.style.display = "none"
+
+    }
+    if (task.currentState === "TestCompletion") {
+        console.log("a")
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "none";
+        testcompletion.style.display = "block"
+        checkButton.style.display = "block";
+
+
+    }
+    if (task.currentState === "ProjectDelivery") {
+        console.log("a")
+        btnSyntax.style.display = "none";
+        btnTestCases.style.display = "none";
+        testcompletion.style.display = "none"
+        checkButton.style.display = "none";
+
+    }
+    tasks.forEach(element => {
         if (element.id == e.target.parentElement.id) {
             document.getElementById("name-info").value = element.name;
             document.getElementById("purpose-info").value = element.purpose;
             document.getElementById("language-info").value = element.language;
             document.getElementById("role-info").value = element.role;
-            document.getElementById("date-info").value = element.role;
             document.getElementById("date-info").value = element.date;
             document.getElementById("code").value = element.codeinput;
+            document.getElementById("state-info").value = element.currentState;
 
         }
     });
@@ -34,42 +129,42 @@ function closeTestScreen() {
     lightbox.classList.remove("show");
 }
 
-const removeTask = (e) =>{
+const removeTask = (e) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    if(user.role != "Manager"){
+    if (user.role != "Manager") {
         alert("Only Manager Can Remove Tasks!");
         return;
     }
 
-    if(!confirm("Are u sure to delete task!")) return;
+    if (!confirm("Are u sure to delete task!")) return;
 
     const id = e.target.parentElement.id;
 
     e.target.parentElement.remove();
 
-    for(let i = 0; i< testerTasks.length;i++){
-        if(testerTasks[i].id == id){
-            testerTasks.splice(i,1);
-            localStorage.setItem("testerTask",JSON.stringify(testerTasks));
+    for (let i = 0; i < testerTasks.length; i++) {
+        if (testerTasks[i].id == id) {
+            testerTasks.splice(i, 1);
+            localStorage.setItem("testerTask", JSON.stringify(testerTasks));
             return;
         }
     }
 
 }
 
-const moveTask = (e) =>{
+const moveTask = (e) => {
 
-    if(e.target.parentElement.parentElement.id == "done"){
+    if (e.target.parentElement.parentElement.id == "done") {
         alert("This task is done completely!");
         e.target.parentElement.classList.add("task-done");
         const id = e.target.parentElement.id;
         e.target.remove();
 
-        for(let i = 0; i< testerTasks.length;i++){
-            if(testerTasks[i].id == id){
+        for (let i = 0; i < testerTasks.length; i++) {
+            if (testerTasks[i].id == id) {
                 testerTasks[i].container = "done";
-                localStorage.setItem("testerTask",JSON.stringify(testerTasks));
+                localStorage.setItem("testerTask", JSON.stringify(testerTasks));
                 return;
             }
         }
@@ -89,9 +184,9 @@ const addTask = (task, parentContainer) => {
 
     element.querySelector(".uil-rocket").addEventListener("click", showTestScreen);
     element.querySelector(".uil-check").addEventListener("click", moveTask);
-    element.querySelector(".uil-times").addEventListener("click",removeTask);
-   
-    if(task.container == "done"){
+    element.querySelector(".uil-times").addEventListener("click", removeTask);
+
+    if (task.container == "done") {
         element.classList.add("task-done");
         element.querySelector(".uil-check").remove();
     }
@@ -100,28 +195,41 @@ const addTask = (task, parentContainer) => {
 }
 
 const loadContent = () => {
-    if (localStorage.getItem("testerTask") == null) {
-        testerTasks = [];
-    } else {
-        testerTasks = JSON.parse(localStorage.getItem("testerTask"));
-        testerTasks.forEach(task => {
-            if(task.container == "done"){
-                addTask(task, doneContainer);
-            }else{
-                addTask(task, todoContainer);
-            }
-            
-        });
-    }
+    /* if (localStorage.getItem("testerTask") == null) {
+         testerTasks = [];
+     } else {
+         testerTasks = JSON.parse(localStorage.getItem("testerTask"));
+         testerTasks.forEach(task => {
+             if (task.container == "done") {
+                 addTask(task, doneContainer);
+             } else {
+                 addTask(task, todoContainer);
+             }
+ 
+         });
+     }*/
+    getLocal();
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    tasks.forEach(task => {
 
-    if (user.role == "Manager") {
-        toDeveloper.style.display = "block";
-    }
+        if (task.container == "doneContainer") {
+            addTask(task, todoContainer);
+        }
+        if (task.container == "done") {
+            addTask(task, doneContainer);
+
+        }
+
+    });
+}
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (user.role == "Manager") {
+    toDeveloper.style.display = "block";
 }
 
-toDeveloper.addEventListener("click", ()=> window.location.assign("index.html"));
+
+toDeveloper.addEventListener("click", () => window.location.assign("index.html"));
 document.addEventListener("DOMContentLoaded", loadContent);
 
 // Lightbox and chatlog 
@@ -144,7 +252,7 @@ function copyCode(e) {
 }
 
 
-clearChatBtn.addEventListener("click",() => {if(confirm("Are you sure to clear chat ?")) chatContainer.innerHTML = "";});
+clearChatBtn.addEventListener("click", () => { if (confirm("Are you sure to clear chat ?")) chatContainer.innerHTML = ""; });
 codeCopyBtn.addEventListener("click", copyCode);
 
 
@@ -230,11 +338,11 @@ const showTypingAnimation = () => {
 const handleOutgoingChat = (e) => {
     e.preventDefault();
 
-
     if (e.target.id == "btn-test-cases") {
         userText = "Produce Test Cases";
     }
     else if (e.target.id == "btn-syntax") {
+
         userText = "Check syntax of Code";
     } else {
         userText = chatInput.value.trim();
@@ -258,7 +366,6 @@ const handleOutgoingChat = (e) => {
     setTimeout(showTypingAnimation, 500);
 }
 
-
 sendBtn.addEventListener("click", handleOutgoingChat);
 btnSyntax.addEventListener("click", handleOutgoingChat);
 btnTestCases.addEventListener("click", handleOutgoingChat);
@@ -266,3 +373,70 @@ btnTestCases.addEventListener("click", handleOutgoingChat);
 
 
 
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "nfa.xml", true);
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        xmlData = xhr.responseXML; // XML yanıtını alın
+        console.log(xmlData);
+
+        // XML içeriğini işleyin
+        /* var elements = xmlData.getElementsByTagName("element");
+         for (var i = 0; i < elements.length; i++) {
+             var element = elements[i];
+             var text = element.textContent;
+             console.log(text);
+         }*/
+    }
+};
+xhr.send();
+
+function checkNfa(input) {
+    for (let index = 0; index < xmlData.getElementsByTagName("transitions")[0].children.length; index++) {
+        if (xmlData.getElementsByTagName("transitions")[0].children[index].children[0].textContent == task.currentState && xmlData.getElementsByTagName("transitions")[0].children[index].children[2].textContent == input) {
+            task.currentState = xmlData.getElementsByTagName("transitions")[0].children[index].children[1].textContent;
+            return;
+        }
+    }
+
+}
+function getTask(id) {
+    getLocal();
+    tasks.forEach(element => {
+        if (element.id == id) {
+            task.id = element.id;
+            task.name = element.name;
+            task.purpose = element.purpose;
+            task.language = element.language;
+            task.date = element.date;
+            task.codeinput = element.codeinput;
+            task.currentState = element.currentState;
+            console.log(task);
+        }
+    });
+}
+function setLocal() {
+    getLocal();
+
+    tasks.push(task);
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+function getLocal() {
+    if (localStorage.getItem('tasks') == null) {
+        return;
+    }
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+}
+function changeLocal() {
+    tasks.forEach(element => {
+        if (element.id == task.id) {
+            element.currentState = task.currentState;
+            element.codeinput = task.codeinput;
+            element.container = task.container
+        }
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+}

@@ -1,6 +1,8 @@
 var user;
 var tasks = []
-var task = { id: 0, name: "", purpose: "", language: "", role: "", date: new Date(), container: "", codeinput: "" }
+var task = { id: 0, name: "", purpose: "", language: "", role: "", date: new Date(), container: "", codeinput: "", currentState: "" }
+var xmlData;
+
 
 const todoContainer = document.getElementById("todo");
 const inProcessContainer = document.getElementById("in-process");
@@ -8,8 +10,8 @@ const doneContainer = document.getElementById("done");
 const btnSubmit = document.getElementById("assign-task");
 const toTesterBtn = document.getElementById("test-page-btn");
 
-toTesterBtn.addEventListener("click", ()=> window.location.assign("tester.html"));
-document.getElementById("chira").addEventListener("click",()=>{if(confirm("Are you sure to go to signin.html")) window.location.assign("signin.html");});
+toTesterBtn.addEventListener("click", () => window.location.assign("tester.html"));
+document.getElementById("chira").addEventListener("click", () => { if (confirm("Are you sure to go to signin.html")) window.location.assign("signin.html"); });
 
 //LightBox
 const btnAddTask = document.getElementById("btn-add-task");
@@ -35,7 +37,7 @@ window.addEventListener("load", (event) => {
 
 const DeleteTask = (e) => {
 
-    if(user.role != "Manager"){
+    if (user.role != "Manager") {
         alert("Only Manager Can Remove Tasks!");
         return;
     }
@@ -49,7 +51,7 @@ const DeleteTask = (e) => {
                 return;
             }
         });
-        
+
         localStorage.setItem('tasks', JSON.stringify(tasks));
         e.target.parentElement.remove();
 
@@ -59,24 +61,59 @@ const DeleteTask = (e) => {
 // add todo
 
 const doneTask = (e) => {
-    
+
     const parentContainer = e.target.parentElement.parentElement;
-    if (parentContainer.id === "done") {
-        alert("The task done completely");
-        e.target.parentElement.classList.add("bg-success");
+    getTask(task.id)
 
-        e.target.parentElement.children[3].style.display = "none";
-        e.target.parentElement.children[2].style.display = "none";
+    console.log(parentContainer.id);
+    console.log("a")
+    if (parentContainer.id == "todo") {
+        console.log("a")
 
-        setTesterTask(e.target.parentElement.id);
-        return;
+        if (task.codeinput == "") {
+            alert("No code written");
+            checkNfa("Error");
+        }
+        else {
+            checkNfa("Success");
+            changeLocal(task.id, 1);
+            addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
+            e.target.parentElement.remove();
+        }
+    }
+
+    else if (parentContainer.id === "in-process") {
+
+        if (confirm("Your code will be redirected to the tester screen. Are you sure you checked your code?") == true) {
+            checkNfa("Success");
+            e.target.parentElement.classList.add("bg-success");
+            e.target.parentElement.children[3].style.display = "none";
+
+            changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
+            addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
+            setTesterTask(e.target.parentElement.id);
+
+            e.target.parentElement.remove();
+            alert("The task done completely");
+
+        } else {
+            checkNfa("Error");
+        }
+        /* alert("The task done completely");
+         e.target.parentElement.classList.add("bg-success");
+ 
+         e.target.parentElement.children[3].style.display = "none";
+         e.target.parentElement.children[2].style.display = "none";
+ 
+         setTesterTask(e.target.parentElement.id);
+         return;*/
 
     }
     //console.log(e.target.parentElement.children[0].textContent)
-   // console.log(e.target.parentElement.id);
-    changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
+    // console.log(e.target.parentElement.id);
+    /*changeLocal(e.target.parentElement.id, parentContainer.parentElement.nextElementSibling.lastElementChild);
     addTask(e.target.parentElement.children[0].textContent, parentContainer.parentElement.nextElementSibling.lastElementChild);
-    e.target.parentElement.remove();
+    e.target.parentElement.remove();*/
 }
 const viewInfo = (e) => {
     var lightbox2 = document.getElementById("lightbox2");
@@ -94,6 +131,8 @@ const viewInfo = (e) => {
             document.getElementById("language-info").value = task.language;
             document.getElementById("role-info").value = task.role;
             document.getElementById("date-info").value = task.date;
+            document.getElementById("state-info").value = task.currentState;
+
             if (task.language == "none") {
                 document.getElementById("codeInput").style.display = "none";
             }
@@ -117,7 +156,11 @@ const addTask = (text, parentContainer) => {
     item.innerHTML = `<p>${text}</p> <i class="uil uil-info"></i><i class="uil uil-times"></i><i class="uil uil-check"></i>`; item.draggable = true;
     item.id = task.id;
     parentContainer.appendChild(item);
-
+    console.log(item);
+    if (item.parentElement.id == "done") {
+        item.children[3].style.display = "none";
+        item.classList.add("bg-success");
+    }
     // done click event
     item.querySelector(".uil-check").addEventListener("click", doneTask);
     // delete button event
@@ -142,12 +185,16 @@ const submitTodo = (e, parentContainer) => {
     task.role = document.getElementById('role-task').options[document.getElementById('role-task').selectedIndex].value
     task.date = document.getElementById("date-task").value;
     task.container = "todoContainer";
+    task.currentState = xmlData.getElementsByTagName("initialState")[0].textContent;
 
 
     if (task.name == "" || task.purpose == "" || !task.date) {
         alert("Please fill in all the blanks!")
+        checkNfa("Error")
         return;
     }
+    checkNfa("Success");
+
     addTask(task.name, parentContainer);
     document.getElementById("input-task").value = "";
     document.getElementById("purpose-task").value = "";
@@ -174,7 +221,7 @@ const initTodoContainer = (e, parentContainer) => {
     parentContainer.insertBefore(draggingItem, nextSibling);
 }
 
-todoContainer.addEventListener("dragover", e => initTodoContainer(e, todoContainer));
+/*todoContainer.addEventListener("dragover", e => initTodoContainer(e, todoContainer));
 todoContainer.addEventListener("dragenter", e => e.preventDefault());
 
 inProcessContainer.addEventListener("dragover", e => initTodoContainer(e, inProcessContainer));
@@ -182,7 +229,7 @@ inProcessContainer.addEventListener("dragenter", e => e.preventDefault());
 
 doneContainer.addEventListener("dragover", e => initTodoContainer(e, doneContainer));
 doneContainer.addEventListener("dragenter", e => e.preventDefault());
-
+*/
 
 function setLocal() {
     getLocal();
@@ -225,6 +272,7 @@ function changeLocal(id, parentContainer) {
         tasks.forEach(element => {
             if (element.id == id) {
                 element.codeinput = task.codeinput;
+                element.currentState = task.currentState;
                 localStorage.setItem('tasks', JSON.stringify(tasks));
                 return;
             }
@@ -275,13 +323,55 @@ function setTesterTask(id) {
         }
     });
 
-    tasks.forEach(function (task, index, arr) {
-        if (id == task.id) {
-            arr.splice(index, 1);
-            return;
-        }
-    });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    /* tasks.forEach(function (task, index, arr) {
+         if (id == task.id) {
+             arr.splice(index, 1);
+             return;
+         }
+     });
+     localStorage.setItem('tasks', JSON.stringify(tasks));*/
 
 }
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "nfa.xml", true);
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        xmlData = xhr.responseXML; // XML yanıtını alın
+        console.log(xmlData);
+        currentState = xmlData.getElementsByTagName("initialState")[0].textContent;
+        // XML içeriğini işleyin
+        /* var elements = xmlData.getElementsByTagName("element");
+         for (var i = 0; i < elements.length; i++) {
+             var element = elements[i];
+             var text = element.textContent;
+             console.log(text);
+         }*/
+    }
+};
+xhr.send();
 
+function checkNfa(input) {
+    getTask(task.id);
+    for (let index = 0; index < xmlData.getElementsByTagName("transitions")[0].children.length; index++) {
+        if (xmlData.getElementsByTagName("transitions")[0].children[index].children[0].textContent == task.currentState && xmlData.getElementsByTagName("transitions")[0].children[index].children[2].textContent == input) {
+            task.currentState = xmlData.getElementsByTagName("transitions")[0].children[index].children[1].textContent;
+            console.log(currentState);
+            return;
+        }
+    }
+}
+
+function getTask(id) {
+    tasks.forEach(element => {
+        if (element.id == id) {
+            task.id = element.id;
+            task.name = element.name;
+            task.purpose = element.purpose;
+            task.language = element.language;
+            task.date = element.date;
+            task.codeinput = element.codeinput;
+            task.currentState = element.currentState;
+            console.log(task);
+        }
+    });
+}
